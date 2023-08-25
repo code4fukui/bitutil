@@ -53,3 +53,10 @@ Deno.test("write(3) with cut", () => {
   w.write(5, 6);
   t.assertEquals(w.getBytes(true), new TextEncoder().encode("abc"));
 });
+Deno.test("write(14)", () => {
+  const w = new BitWriter();
+  w.write(14, 0b11111111000000);
+  w.write(14, 4096);
+  t.assertEquals(w.getBytes(), Base2.decode("1111111100000001 00000000 00000000"));
+  t.assertEquals(w.getBytes(true), Base2.decode("1111111100000001 00000000"));
+});

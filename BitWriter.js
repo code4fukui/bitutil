@@ -10,8 +10,12 @@ export class BitWriter {
     this.remain = 8;
   }
   write(bitlen, n) {
-    if (bitlen > 8) {
-      throw new Error("not supported yet bitlen > 8");
+    if (bitlen > 16) {
+      throw new Error("not supported yet bitlen > 16");
+    } else if (bitlen > 8) {
+      this.write(bitlen - 8, (n >> 8));
+      this.write(8, n & 0xff);
+      return;
     }
     if (this.remain == 0) {
       this.remain = 8;

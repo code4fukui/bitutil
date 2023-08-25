@@ -6,8 +6,19 @@ export class BitReader {
     this.remain = 8;
   }
   read(bitlen) { // -1:eof
-    if (bitlen > 8) {
-      throw new Error("not supported yet bitlen > 8");
+    if (bitlen > 16) {
+      throw new Error("not supported yet bitlen > 16");
+    } else if (bitlen > 8) {
+      const n = this.read(bitlen - 8);
+      if (n < 0) {
+        return -1;
+      }
+      const m = this.read(8);
+      if (m < 0) {
+        return (n << 8);
+        //return -1;
+      }
+      return (n << 8) | m;
     }
     if (this.len == this.idx) {
       return -1;

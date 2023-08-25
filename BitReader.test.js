@@ -55,3 +55,9 @@ Deno.test("read(5) abc", () => {
   t.assertEquals(r.read(5), 6);
   t.assertEquals(r.read(5), -1);
 });
+Deno.test("read(14)", () => {
+  const r = new BitReader(Base2.decode("1111111100000001"));
+  t.assertEquals(r.read(14), 0b11111111000000);
+  t.assertEquals(r.read(14), 4096);
+  t.assertEquals(r.read(14), -1);
+});
